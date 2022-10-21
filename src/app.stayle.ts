@@ -115,8 +115,8 @@ body {
 
 `;
 export const Main = styled.main`
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  height: auto;
   display: grid;
   grid-template-columns: 3fr 2fr;
 

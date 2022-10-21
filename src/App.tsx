@@ -113,9 +113,9 @@ function App() {
             }.jpg`}
             width={window.innerWidth}
             style={{
-              width: "100%",
-              height: "100%",
-              position: "absolute",
+              width: "100vw",
+              height: "100vh",
+              position: "fixed",
               left: 0,
               top: 0,
               objectFit: "cover",
