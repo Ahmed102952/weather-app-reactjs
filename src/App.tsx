@@ -104,8 +104,9 @@ function App() {
       <IKContext urlEndpoint="https://ik.imagekit.io/b85lgzght1m/">
         <IKImage
           path={`weather-app/images/${weatherData.is_day ? "day" : "night"}/${
-            weatherData.skyState
+            weatherData.skyState || "clear"
           }.jpg`}
+          
           width={window.innerWidth}
           style={{
             width: "100%",
