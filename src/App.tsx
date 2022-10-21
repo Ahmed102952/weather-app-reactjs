@@ -76,7 +76,11 @@ const DEFAULT_DATE = {
 const DEFAULT_LOCATION = "London";
 
 function App() {
-  const [location, setLocation] = useState(localStorage.getItem("location")? localStorage.getItem("location") as string : DEFAULT_LOCATION);
+  const [location, setLocation] = useState(
+    localStorage.getItem("location")
+      ? (localStorage.getItem("location") as string)
+      : DEFAULT_LOCATION
+  );
   const [weatherData, setWeatherData] = useState(DEFAULT_WEATHER_DATA);
   const [date, setDate] = useState(DEFAULT_DATE);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -96,28 +100,29 @@ function App() {
   }, [data]);
 
   useEffect(() => {
-    localStorage.setItem("location", location)
-  }, [location])
+    localStorage.setItem("location", location);
+  }, [location]);
 
   return (
     <Main>
       <IKContext urlEndpoint="https://ik.imagekit.io/b85lgzght1m/">
-        <IKImage
-          path={`weather-app/images/${weatherData.is_day ? "day" : "night"}/${
-            weatherData.skyState || "clear"
-          }.jpg`}
-          
-          width={window.innerWidth}
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            left: 0,
-            top: 0,
-            objectFit: "cover",
-            zIndex: -1,
-          }}
-        ></IKImage>
+        {data ? (
+          <IKImage
+            path={`weather-app/images/${weatherData.is_day ? "day" : "night"}/${
+              weatherData.skyState
+            }.jpg`}
+            width={window.innerWidth}
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "absolute",
+              left: 0,
+              top: 0,
+              objectFit: "cover",
+              zIndex: -1,
+            }}
+          ></IKImage>
+        ) : null}
       </IKContext>
       <WeatherDisplay>
         <Title>The Weather</Title>
