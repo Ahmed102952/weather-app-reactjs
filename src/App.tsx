@@ -121,7 +121,7 @@ function App() {
               objectFit: "cover",
               zIndex: -1,
             }}
-          ></IKImage>
+           />
         ) : null}
       </IKContext>
       <WeatherDisplay>
