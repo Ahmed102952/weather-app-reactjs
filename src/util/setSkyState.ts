@@ -1,4 +1,5 @@
 export const setSkyState = (code: number): string => {
+  // function take weather state code and return text explain sky state
   let skyState = "partly-cloudy";
 
   if (code == 1000) {

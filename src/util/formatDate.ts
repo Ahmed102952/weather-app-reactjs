@@ -1,4 +1,5 @@
 export const formatDate = (localtime: string) => {
+  // take localtime string and format it to display in the app
   const date = new Date(localtime);
   const hour = date
     .getHours()
