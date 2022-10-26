@@ -4,19 +4,7 @@ import { useGetWeather } from "./hooks/useGetWeather";
 import { useQuery } from "react-query";
 
 // styles
-import {
-  Flex,
-  Title,
-  Main,
-  P,
-  Temp,
-  WeatherInfo,
-  CityName,
-  SearchInput,
-  Form,
-  SearchBtn,
-  ExtraInfo,
-} from "./app.stayle";
+import { Main } from "./app.stayle";
 
 // assests
 import search from "./assets/search.png";
@@ -92,8 +80,8 @@ function App() {
   });
 
   const changeLocation = (location: string) => {
-    setLocation(location)
-  }
+    setLocation(location);
+  };
 
   useEffect(() => {
     if (!isError && data) {
@@ -127,9 +115,13 @@ function App() {
           />
         ) : null}
       </IKContext>
-      <WeatherDisplay {...weatherData} {...date}/>
-      <Panel {...weatherData} error={error} isError={isError} changeLocation={changeLocation}/>
-      
+      <WeatherDisplay {...weatherData} {...date} />
+      <Panel
+        {...weatherData}
+        error={error}
+        isError={isError}
+        changeLocation={changeLocation}
+      />
     </Main>
   );
 }
