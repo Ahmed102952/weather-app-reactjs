@@ -8,11 +8,12 @@ export const useGetWeather = async (
   location: string
 ) => {
   try {
+    // request weather data and return needed data to display in the app
     const res = await fetchWeatherData(apiKey, apiUrl, location);
     const { weatherData, date } = filterData(await res);
     const skyState = setSkyState(weatherData.code);
     return { weatherData: { ...weatherData, skyState }, date: { ...date } };
   } catch (error) {
-    throw error
+    throw error;
   }
 };

@@ -9,9 +9,7 @@ import {
   Title,
   Main,
   P,
-  Panel,
   Temp,
-  WeatherDisplay,
   WeatherInfo,
   CityName,
   SearchInput,
@@ -22,6 +20,8 @@ import {
 
 // assests
 import search from "./assets/search.png";
+import WeatherDisplay from "./components/WeatherDisplay";
+import Panel from "./components/Panel";
 
 // types
 export interface weatherDataT {
@@ -83,7 +83,6 @@ function App() {
   );
   const [weatherData, setWeatherData] = useState(DEFAULT_WEATHER_DATA);
   const [date, setDate] = useState(DEFAULT_DATE);
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const { isError, data, error } = useQuery<
     { weatherData: weatherDataT; date: dateT },
@@ -92,15 +91,9 @@ function App() {
     retry: false,
   });
 
-  const formHandle = React.useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchInputRef.current?.value === "") {
-      window.alert("Please enter a location");
-    } else {
-      setLocation(searchInputRef.current?.value as string);
-    }
-    return;
-  }, []);
+  const changeLocation = (location: string) => {
+    setLocation(location)
+  }
 
   useEffect(() => {
     if (!isError && data) {
@@ -134,59 +127,9 @@ function App() {
           />
         ) : null}
       </IKContext>
-      <WeatherDisplay>
-        <Title>The Weather</Title>
-        <WeatherInfo>
-          <Temp>{weatherData.temp_c?.toFixed()}&deg;</Temp>
-          <div>
-            <CityName>{weatherData.name}</CityName>
-            <span>
-              {date.hour}:{date.min}-{date.dayName}, {date.day} {date.monthName}{" "}
-              '{date.year}
-            </span>
-          </div>
-          <Flex flex_column ai_c>
-            <img
-              style={{ width: "auto", height: "auto" }}
-              src="https://cdn.weatherapi.com/weather/64x64/day/113.png"
-              alt="icon"
-            />
-            <P>{weatherData.text}</P>
-          </Flex>
-        </WeatherInfo>
-      </WeatherDisplay>
-      <Panel>
-        <Form onSubmit={formHandle}>
-          <SearchInput
-            type="search"
-            name="location"
-            id="location"
-            placeholder="Location..."
-            ref={searchInputRef}
-            error={isError}
-          />
-          <SearchBtn type="submit">
-            <img src={search} alt="Search" />
-          </SearchBtn>
-        </Form>
-        {isError ? <p style={{ color: "red" }}>{error.message}</p> : null}
-        <ExtraInfo>
-          <P>Country</P>
-          <P>{weatherData.country}</P>
-
-          <P>Feels like</P>
-          <P>{weatherData.feelslike_c.toFixed()}&deg;</P>
-
-          <P>Clouds</P>
-          <P>{weatherData.cloud}%</P>
-
-          <P>Humidity</P>
-          <P>{weatherData.humidity}%</P>
-
-          <P>Wind Speed</P>
-          <P>{weatherData.wind_kph}k/h</P>
-        </ExtraInfo>
-      </Panel>
+      <WeatherDisplay {...weatherData} {...date}/>
+      <Panel {...weatherData} error={error} isError={isError} changeLocation={changeLocation}/>
+      
     </Main>
   );
 }

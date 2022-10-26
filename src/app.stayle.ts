@@ -125,7 +125,7 @@ export const Main = styled.main`
   }
 `;
 
-export const WeatherDisplay = styled.div`
+export const WeatherDisplayDiv = styled.div`
   --space-y: var(--space-4);
   --space-x: var(--space-5);
   display: flex;
@@ -191,7 +191,7 @@ export const Temp = styled.p`
   }
 `;
 
-export const Panel = styled.aside`
+export const PanelAside = styled.aside`
   --p-b: var(--space-3);
   --p-l: var(--space-3);
   display: flex;
