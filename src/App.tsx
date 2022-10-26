@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { IKContext, IKImage } from "imagekitio-react";
 import { useGetWeather } from "./hooks/useGetWeather";
 import { useQuery } from "react-query";
@@ -85,12 +85,22 @@ function App() {
   const [date, setDate] = useState(DEFAULT_DATE);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const { isLoading, isError, data, error } = useQuery<
+  const { isError, data, error } = useQuery<
     { weatherData: weatherDataT; date: dateT },
     Error
   >([location], () => useGetWeather(API_KEY, API_URL, location), {
     retry: false,
   });
+
+  const formHandle = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchInputRef.current?.value === "") {
+      window.alert("Please enter a location");
+    } else {
+      setLocation(searchInputRef.current?.value as string);
+    }
+    return;
+  };
 
   useEffect(() => {
     if (!isError && data) {
@@ -109,7 +119,7 @@ function App() {
         {data ? (
           <IKImage
             path={`weather-app/images/${weatherData.is_day ? "day" : "night"}/${
-              weatherData.skyState? weatherData.skyState : "clear"
+              weatherData.skyState ? weatherData.skyState : "clear"
             }.jpg`}
             width={window.innerWidth}
             style={{
@@ -121,7 +131,7 @@ function App() {
               objectFit: "cover",
               zIndex: -1,
             }}
-          ></IKImage>
+          />
         ) : null}
       </IKContext>
       <WeatherDisplay>
@@ -146,17 +156,7 @@ function App() {
         </WeatherInfo>
       </WeatherDisplay>
       <Panel>
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (searchInputRef.current?.value === "") {
-              window.alert("Please enter a location");
-            } else {
-              setLocation(searchInputRef.current?.value as string);
-            }
-            return;
-          }}
-        >
+        <Form onSubmit={formHandle}>
           <SearchInput
             type="search"
             name="location"
