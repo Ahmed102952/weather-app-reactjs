@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { IKContext, IKImage } from "imagekitio-react";
 import { useGetWeather } from "./hooks/useGetWeather";
 import { useQuery } from "react-query";
@@ -92,7 +92,7 @@ function App() {
     retry: false,
   });
 
-  const formHandle = (e: FormEvent<HTMLFormElement>) => {
+  const formHandle = React.useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchInputRef.current?.value === "") {
       window.alert("Please enter a location");
@@ -100,7 +100,7 @@ function App() {
       setLocation(searchInputRef.current?.value as string);
     }
     return;
-  };
+  }, []);
 
   useEffect(() => {
     if (!isError && data) {
