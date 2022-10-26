@@ -1,4 +1,8 @@
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import  {
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { IKContext, IKImage } from "imagekitio-react";
 import { useGetWeather } from "./hooks/useGetWeather";
 import { useQuery } from "react-query";
@@ -7,7 +11,6 @@ import { useQuery } from "react-query";
 import { Main } from "./app.stayle";
 
 // assests
-import search from "./assets/search.png";
 import WeatherDisplay from "./components/WeatherDisplay";
 import Panel from "./components/Panel";
 
@@ -79,10 +82,9 @@ function App() {
     retry: false,
   });
 
-  const changeLocation = (location: string) => {
+  const changeLocation = useCallback((location: string) => {
     setLocation(location);
-  };
-
+  }, []);
   useEffect(() => {
     if (!isError && data) {
       setDate(data.date);

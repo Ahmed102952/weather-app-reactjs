@@ -1,5 +1,4 @@
-import React from "react";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useCallback } from "react";
 import { dateT, weatherDataT } from "../App";
 import {
   ExtraInfo,
@@ -31,7 +30,7 @@ const Panel = ({
 }: PanelProps) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const formHandle = React.useCallback((e: FormEvent<HTMLFormElement>) => {
+  const formHandle = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchInputRef.current?.value === "") {
       window.alert("Please enter a location");
@@ -54,7 +53,9 @@ const Panel = ({
           <img src={search} alt="Search" />
         </SearchBtn>
       </Form>
-      {isError && error ? <p style={{ color: "red" }}>{error.message}</p> : null}
+      {isError && error ? (
+        <p style={{ color: "red" }}>{error.message}</p>
+      ) : null}
       <ExtraInfo>
         <P>Country</P>
         <P>{country}</P>
