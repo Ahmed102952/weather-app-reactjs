@@ -85,10 +85,14 @@ function App() {
   const changeLocation = useCallback((location: string) => {
     setLocation(location);
   }, []);
+
   useEffect(() => {
-    if (!isError && data) {
-      setDate(data.date);
+    if (isError && !data) {
+      return
+    }
+    if(data) {
       setWeatherData(data.weatherData);
+      setDate(data.date);
     }
   }, [data]);
 
