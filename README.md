@@ -10,4 +10,4 @@ made with ReactJS and TypeScript and Styled-components for the style
 
 `npm run build` to build the app in dir dist.
 
-[Live preview](https://weather-app.am0.tech/)
+[Live preview](https://weather-app-tau-rosy.vercel.app/)
